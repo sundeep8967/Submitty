@@ -914,8 +914,11 @@ function showEditPostForm(post_id, thread_id, shouldEditThread, render_markdown,
                 $('#lock_thread_date').val(thread_lock_date);
                 if (Date.parse(expiration) > new Date()) {
                     $('#pin-expiration-date').show();
+                    $('#expirationDate').val(expiration);
                 }
-                $('#expirationDate').val(expiration);
+                else {
+                    $('#expirationDate').val('');
+                }
                 // Categories
                 $('.cat-buttons').removeClass('btn-selected');
                 $.each(categories_ids, (index, category_id) => {
