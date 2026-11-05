@@ -1634,12 +1634,14 @@ class AdminGradeableController extends AbstractController {
         // Finally, construct the gradeable
         $gradeable = new Gradeable($this->core, $gradeable_create_data);
 
-        // Setup student permissions specially for scanned exams
+        // Setup student permissions and default dates specially for scanned exams
         if (Utils::getBooleanValue($details['bulk_upload'])) {
             $gradeable->setStudentView(true);
             $gradeable->setStudentViewAfterGrades(true);
             $gradeable->setStudentSubmit(false);
             $gradeable->setStudentDownload(false);
+            $gradeable->setHasDueDate(false);
+            $gradeable->setHasReleaseDate(true);
 
             $gradeable->setAutogradingConfigPath(
                 FileUtils::joinPaths($this->core->getConfig()->getSubmittyInstallPath(), 'more_autograding_examples/pdf_exam/config')
@@ -1899,10 +1901,6 @@ class AdminGradeableController extends AbstractController {
                 // If something goes wrong, record it so we can tell the user
                 $errors[$prop] = $e->getMessage();
             }
-        }
-
-        if (!$gradeable->hasDueDate() && $gradeable->hasReleaseDate()) {
-            $gradeable->setHasReleaseDate(false);
         }
 
         // Set the dates last just in case the request contained parameters that
