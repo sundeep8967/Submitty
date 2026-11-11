@@ -94,9 +94,10 @@ class Team extends AbstractModel implements \JsonSerializable {
     /**
      * Gets the anonymous id of this team
      * TODO: this is to create symmetry with the User class, teams' anon ids are just their ids for now
+     * @param string|null $g_id optional gradeable id for API symmetry with User::getAnonId
      * @return string
      */
-    public function getAnonId() {
+    public function getAnonId(?string $g_id = null) {
         if (empty($this->core->getQueries()->getTeamAnonId($this->getId())) || $this->core->getQueries()->getTeamAnonId($this->getId())[$this->getId()] === null) {
             $alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             $anon_ids = $this->core->getQueries()->getAllAnonIds();

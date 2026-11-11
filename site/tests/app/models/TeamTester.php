@@ -83,5 +83,6 @@ class TeamTester extends BaseUnitTest {
                 $this->assertEquals(15, strlen($anon_id));
             }));
         $this->assertEquals($anon_id, $team->getAnonId());
+        $this->assertEquals($anon_id, $team->getAnonId('sample_gradeable'));
     }
 }
